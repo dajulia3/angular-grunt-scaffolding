@@ -1,0 +1,6 @@
+.idea
+dist
+temp
+node_modules
+npm-debug.log
+.sass-cache/

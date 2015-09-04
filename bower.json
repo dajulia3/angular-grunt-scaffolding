@@ -1,0 +1,22 @@
+{
+  "name": "bower install --save angular",
+  "version": "0.0.0",
+  "authors": [
+    "David Julia <dajulia3@gmail.com>"
+  ],
+  "description": "angular bootstrap",
+  "main": "app.js",
+  "keywords": [
+    "angular",
+    "starter",
+    "project"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
