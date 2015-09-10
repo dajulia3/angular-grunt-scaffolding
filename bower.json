@@ -1,5 +1,5 @@
 {
-  "name": "bower install --save angular",
+  "name": "angular bootstrap grunt starter project",
   "version": "0.0.0",
   "authors": [
     "David Julia <dajulia3@gmail.com>"
@@ -18,5 +18,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-mocks": "~1.4.5"
+  }
 }

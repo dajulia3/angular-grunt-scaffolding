@@ -1,13 +1,6 @@
 module.exports = function (grunt) {
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-angular-templates');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-ng-annotate');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-clean');
+    var camelCase = require('camelcase');
+    require('load-grunt-tasks')(grunt);
     /*
      Loads all Grunt task plugins. You must load a task to use it here.
      Normally, you would have to write something like:
@@ -78,8 +71,8 @@ module.exports = function (grunt) {
                         'bower_components/angular-mocks/angular-mocks.js',
                         'src/**/*Module.js',
                         'src/**/*!(Module).js',
-                        'test/**/*.js',
-                        'temp/modules/**/*.templates.min.js'
+                        'test/**/*!(Spec).js',
+                        'test/**/*Spec.js'
                     ],
                     /*
                      how to display the results
@@ -87,7 +80,7 @@ module.exports = function (grunt) {
                      junit for junit style xml output
                      coverage for code coverage results
                      */
-                    reporters: ['mocha', 'junit', 'coverage'],
+                    reporters: ['mocha'],
 // preprocessors are plugins to process files before running tests
 // this case, we are preprocessing source files with 'coverage'
 // this will instrument our source code
@@ -173,9 +166,9 @@ module.exports = function (grunt) {
                      */
                     'temp/app.min.js': [
                         'bower_components/angular/angular.js',
-                        'bower_components/angular-route/angular-route.js',
+                        //'bower_components/angular-route/angular-route.js',
                         'src/**/*Module.js',
-                        'src/**/*(!Module).js',
+                        'src/**/*!(Module).js',
                         'temp/modules/**/*.templates.min.js' // this is the compiled templates.js
                     ]
                 }
@@ -229,16 +222,17 @@ module.exports = function (grunt) {
             if (!grunt.file.isDir(path)) {
                 return;
             }
-            // get the module name by looking at the directory we're in
-            var moduleDirname = path.substr(path.lastIndexOf('/') + 1);
+            // get the module name by looking at the directory we're in (camelCase it)
+            var moduleName = camelCase(path.substr(path.lastIndexOf('/') + 1));
 
+            console.error("module", moduleName);
             // add ngtemplate subtasks for each module, turning
             // all module partials into $templateCache objects
             var ngtemplates = {};
-            ngtemplates[moduleDirname] = {
-                module: moduleDirname,
+            ngtemplates[moduleName] = {
+                module: moduleName,
                 src: path + "/**/*.html",
-                dest: 'temp/modules/' + moduleDirname + '/' + moduleDirname + '.templates.min.js'
+                dest: 'temp/modules/' + moduleName + '/' + moduleName + '.templates.min.js'
             };
             grunt.config.set('ngtemplates', ngtemplates);
         });
